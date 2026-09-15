@@ -5,10 +5,11 @@ Plataforma de conectar alunos a professores particulares de diversas disciplinas
 
 ## 🚀 Tecnologias Utilizadas:
 
-* **Front-end:** 
-* **Back-end:** 
-* **Banco de Dados:** 
-* **Controle de Versão:** 
+* **Front-end:** HTML, CSS, JavaScript, React, Vite, React Router, Material UI, Emotion, React Icons
+* **Back-end:** Node.js, Express, Passport, JWT, CORS, dotenv
+* **Banco de Dados:** MongoDB
+* **Ferramentas de desenvolvimento:** Nodemon, ESLint
+* **Controle de Versão:** GitHub
 
 ---
 
@@ -17,8 +18,8 @@ Plataforma de conectar alunos a professores particulares de diversas disciplinas
 Acompanhe o andamento das funcionalidades e etapas do projeto:
 
 - [x] Criação da estrutura inicial do repositório
-- [ ] Definição do modelo de dados (Banco de Dados)
-- [ ] Desenvolvimento da interface de cadastro/login (Alunos e Professores)
+- [x] Definição do modelo de dados (Banco de Dados)
+- [x] Desenvolvimento da interface de cadastro/login (Alunos e Professores)
 - [ ] Implementação da listagem e busca de professores por matéria
 - [ ] Sistema de agendamento de aulas particulares
 - [ ] Painel de gerenciamento para os professores
