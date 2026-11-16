@@ -22,7 +22,7 @@ test('POST /auth/signup cadastra usuario e retorna 200 com token', async () => {
 
     const { response, data } = await signup(base, email, 'senha123');
 
-    assert.equal(response.status, 201);
+    assert.equal(response.status, 200);
     assert.equal(data.success, true);
     assert.equal(data.body.text, 'User registered correctly!');
     assert.equal(data.body.logged, true);
