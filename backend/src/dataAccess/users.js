@@ -30,8 +30,8 @@ export default class UsersDataAccess {
                 if (error) {
                     throw new Error('Error during hashing password!');
                 }
-                userData = { ...userData, password: hashedPassword, salt}
-        
+                userData = { ...userData, password: hashedPassword, salt};
+
                 const result = await Mongo.db
                     .collection(collectionName)
                     .findOneAndUpdate(

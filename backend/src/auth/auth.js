@@ -10,8 +10,8 @@ const collectionName = 'users';
 
 passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, callback) => {
     const user = await Mongo.db
-    .collection(collectionName)
-    .findOne({ email: email });
+        .collection(collectionName)
+        .findOne({ email: email });
 
     if (!user) {
         return callback(null, false);
@@ -19,7 +19,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, passwor
 
     const saltBuffer = user.salt.buffer;
 
-    crypto.pbkdf2(password, saltBuffer, 310000, 16, 'sha256', (error, hashedPassword) => { 
+    crypto.pbkdf2(password, saltBuffer, 310000, 16, 'sha256', (error, hashedPassword) => {
         if (error) {
             return callback(error, false);
         }
@@ -33,7 +33,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, passwor
         const {password, salt, ...rest} = user;
 
         return callback(null, rest);
-    })
+    });
 
 }));
 
@@ -41,8 +41,8 @@ const authRouter = express.Router();
 
 authRouter.post('/signup', async (req, res) => {
     const checkUser = await Mongo.db
-    .collection(collectionName)
-    .findOne({ email: req.body.email });
+        .collection(collectionName)
+        .findOne({ email: req.body.email });
 
     if(checkUser) {
         return res.status(500).send({
@@ -51,7 +51,7 @@ authRouter.post('/signup', async (req, res) => {
             body: {
                 text: 'User already exists!'
             }
-        })
+        });
     }
 
     const salt = crypto.randomBytes(16);
@@ -62,23 +62,23 @@ authRouter.post('/signup', async (req, res) => {
                 statusCode: 500,
                 body: {
                     text: 'Error on crypto password!',
-                    err: err
+                    err: error
                 }
-            })
+            });
         }
 
-        const result = await Mongo.db   
-        .collection(collectionName)
-        .insertOne({
-            email: req.body.email,
-            password: hashedPassword,
-            salt
-        });
+        const result = await Mongo.db
+            .collection(collectionName)
+            .insertOne({
+                email: req.body.email,
+                password: hashedPassword,
+                salt
+            });
 
         if(result.insertedId) {
             const user = await Mongo.db
-            .collection(collectionName)
-            .findOne({ _id: new ObjectId(result.insertedId) });
+                .collection(collectionName)
+                .findOne({ _id: new ObjectId(result.insertedId) });
 
             const token = jwt.sign(user, 'secret');
             return res.send({
@@ -92,9 +92,9 @@ authRouter.post('/signup', async (req, res) => {
                 }
 
 
-            })
+            });
         }
-    })
+    });
 });
 
 authRouter.post('/login', (req, res) => {
@@ -107,7 +107,7 @@ authRouter.post('/login', (req, res) => {
                     text: 'Error during authentication!',
                     error
                 }
-            })
+            });
         }
 
         if(!user) {
@@ -117,7 +117,7 @@ authRouter.post('/login', (req, res) => {
                 body: {
                     text: 'Credentials are not correct!'
                 }
-            })
+            });
         }
 
         const token = jwt.sign(user, 'secret');
@@ -127,10 +127,10 @@ authRouter.post('/login', (req, res) => {
             body: {
                 text: 'User logged correctly!',
                 user,
-                token,
+                token
             }
-        })
-    })(req, res)
-})
+        });
+    })(req, res);
+});
 
 export default authRouter;

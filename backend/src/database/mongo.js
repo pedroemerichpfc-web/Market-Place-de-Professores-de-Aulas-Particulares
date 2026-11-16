@@ -16,7 +16,7 @@ export const Mongo = {
         } catch (error) {
             return {
                 text: 'Error during mongo connection', error
-            }
+            };
         }
-    },
-}
+    }
+};
