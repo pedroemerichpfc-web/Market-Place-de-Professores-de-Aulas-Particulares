@@ -97,3 +97,28 @@ test('deveAtualizarApenasOsCamposEnviadosQuandoNaoHaSenha', async () => {
     assert.deepEqual(update, { $set: { email: 'novo@test.com' } });
     assert.deepEqual(result, { email: 'novo@test.com' });
 });
+
+test('deveGravarHashESaltNuncaASenhaEmTextoPuroQuandoAtualizaSenha', async () => {
+    // Arrange
+    const novaSenha = 'novaSenha123';
+
+    // Act
+    await dataAccess.updateUser(VALID_ID, { password: novaSenha });
+
+    // Assert
+    assert.equal(collectionMock.findOneAndUpdate.mock.callCount(), 1);
+    const [, update] = collectionMock.findOneAndUpdate.mock.calls[0].arguments;
+    assert.ok(Buffer.isBuffer(update.$set.password));
+    assert.equal(update.$set.password.length, 16);
+    assert.ok(Buffer.isBuffer(update.$set.salt));
+    assert.notEqual(update.$set.password.toString(), novaSenha);
+});
+
+test('deveLancarErroDeHashENaoAtualizarQuandoSenhaNaoETexto', async () => {
+    // Act + Assert (tipo e mensagem da excecao)
+    await assert.rejects(
+        () => dataAccess.updateUser(VALID_ID, { password: 12345 }),
+        { name: 'Error', message: 'Error during hashing password!' }
+    );
+    assert.equal(collectionMock.findOneAndUpdate.mock.callCount(), 0);
+});

@@ -113,3 +113,17 @@ test('fluxo cadastro e remocao cruzando /auth e /users', async () => {
     const { data: aposRemocao } = await request(base, 'GET', '/users');
     assert.ok(!aposRemocao.body.some((user) => user.email === email));
 });
+
+test('fluxo troca de senha via PUT /users/:id e login com a nova senha', async () => {
+    const { id, email } = await createUser();
+
+    const { response: respPut } = await request(base, 'PUT', `/users/${id}`, { password: 'novaSenha456' });
+    assert.equal(respPut.status, 200);
+
+    const { response: loginNovo, data } = await request(base, 'POST', '/auth/login', { email, password: 'novaSenha456' });
+    assert.equal(loginNovo.status, 200);
+    assert.equal(data.body.user.email, email);
+
+    const { response: loginAntigo } = await request(base, 'POST', '/auth/login', { email, password: 'senha123' });
+    assert.equal(loginAntigo.status, 400);
+});
