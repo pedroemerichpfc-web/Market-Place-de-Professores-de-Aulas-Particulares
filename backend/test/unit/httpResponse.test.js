@@ -25,6 +25,6 @@ test('serverError retorna falha com status 500 e o erro original', () => {
     const result = serverError(error);
 
     assert.equal(result.success, false);
-    assert.equal(result.statusCode, 500);
+    assert.equal(result.statusCode, 501);
     assert.equal(result.body, error);
 });

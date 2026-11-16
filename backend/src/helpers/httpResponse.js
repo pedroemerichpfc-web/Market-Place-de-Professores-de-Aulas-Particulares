@@ -11,7 +11,7 @@ export const notFound = () => {
     return {
         success: false,
         statusCode: 400,
-        body: 'Not found'
+        body: "Not found"
     };
 
 };
