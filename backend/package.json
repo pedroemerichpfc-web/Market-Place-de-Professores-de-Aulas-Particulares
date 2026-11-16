@@ -4,13 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "test:unit": "node --test \"test/unit/**/*.test.js\"",
+    "test:integration": "node --test \"test/integration/**/*.test.js\"",
+    "test": "npm run test:unit && npm run test:integration",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "eslint": "^10.10.0",
+    "mongodb-memory-server": "^11.3.0",
     "nodemon": "^3.1.14"
   },
   "dependencies": {
@@ -22,5 +28,8 @@
     "mongodb": "^7.6.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
