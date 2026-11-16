@@ -1,8 +1,8 @@
 import express from 'express';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { Mongo } from '../src/database/mongo.js';
-import authRouter from '../src/auth/auth.js';
-import usersRouter from '../src/routes/users.js';
+import { Mongo } from '../../src/database/mongo.js';
+import authRouter from '../../src/auth/auth.js';
+import usersRouter from '../../src/routes/users.js';
 
 let mongod;
 let server;
